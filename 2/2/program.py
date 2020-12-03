@@ -1,18 +1,6 @@
-lines = [line.rstrip('\n') for line in open('input')]
-
-count = 0
-
-for line in lines:
-    split = line.split()
-    nums = split[0].split('-')
-    mini = int(nums[0])
-    maxi = int(nums[1])
-
-    character = split[1][0]
-
-    password = split[2]
-
-    if (password[mini - 1] == character) != (password[maxi - 1] == character):
-        count += 1
-print(count)
-
+import re
+p = '^(\d+)-(\d+) ([a-z]): ([a-z]+)$'
+def condition(m):
+    passw = m.group(4)
+    return (passw[int(m.group(1)) - 1] == m.group(3)) != (passw[int(m.group(2)) - 1] == m.group(3))
+print(sum(map(condition, [re.search(p, l) for l in open('i.txt')])))
